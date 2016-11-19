@@ -3,14 +3,22 @@
 //
 // CS1A, Anand Venkataraman, Fall 2016
 
+/**
+ * Class tests the DateProfile class and includes nicely formatted output.
+ * @author Paul Hayter
+ */
 public class Foothill
 {
    public static final int CONSOLE_WIDTH = 80;
    
+   /**
+    * Method contains tests for DateProfile class.
+    * @param args
+    */
    public static void main(String[] args)
    {
-      DateProfile applicant1 = new DateProfile('F','M',9,5,"Bridget Bardot");
-      DateProfile applicant2 = new DateProfile('M','F',5,8,"Clint Eastwood");
+      DateProfile applicant1 = new DateProfile('F','M',9,6,"Bridget Bardot");
+      DateProfile applicant2 = new DateProfile('M','F',4,8,"Clint Eastwood");
       DateProfile applicant3 = new DateProfile('F','M',10,10,"Lady Gaga");
       DateProfile applicant4 = new DateProfile('M','F',1,4,"Vladimir Putin");
       
@@ -54,7 +62,7 @@ public class Foothill
             + " with expected value being " + DateProfile.DEFAULT_NAME);
       
       System.out.println("\nTest parameterized constructor; expect values of:"
-            + "\nGender='F', Search Gender='M', Romance=9, Finance=5, "
+            + "\nGender='F', Search Gender='M', Romance=9, Finance=6, "
             + "name: Bridget Bardot");
       System.out.println("Parameterized constructor also tests setAll()");
       System.out.println("applicant1 gender is: " + applicant1.getGender());
@@ -115,19 +123,27 @@ public class Foothill
       System.out.println("\nTest fitValue()");
       System.out.println("applicant2 gender is: " + applicant2.getGender()
             + " applicant4 search gender is: " + applicant4.getSearchGender());
-      if (applicant2.fitValue(applicant4) != DateProfile.NO_FIT)
+      if (applicant2.fitValue(applicant4) != 0.0)
          System.out.println("INCORRECTLY made a bad fit based on gender");
       else
          System.out.println("Correctly identified a bad fit based on gender");
 
       System.out.println("applicant2 gender is: " + applicant2.getGender()
             + " applicant3 search gender is: " + applicant3.getSearchGender());
-      if (applicant2.fitValue(applicant3) == DateProfile.NO_FIT)
+      if (applicant2.fitValue(applicant3) == 0.0)
          System.out.println("INCORRECTLY identified a bad fit based on gender");
       else
          System.out.println("Correctly identified a good fit based on gender");
    }
    
+   /**
+    * Displays two DateProfile objects along with their fit in a format width
+    * specified by CONSOLE_WIDTH.
+    * @param profile1 class DateProfile object, one of two profiles to be 
+    * displayed together with fit value.
+    * @param profile2 class DateProfile object, one of two profiles to be 
+    * displayed together with fit value. 
+    */
    static void displayTwoProfiles(DateProfile profile1, DateProfile profile2)
    {
       String outputStr = String.format("The Foothill Dating App has determined "
@@ -137,6 +153,12 @@ public class Foothill
       System.out.println(formatForConsole(outputStr));
    }
    
+   /**
+    * Returns a formatted String which fits the console width specified by 
+    * CONSOLE_WIDTH. Line breaks are between words. There is no hyphenation.
+    * @param inputStr String input to be formatted.
+    * @return specified String.
+    */
    static String formatForConsole(String inputStr)
    {
       final int NOT_FOUND = -1;
@@ -154,7 +176,7 @@ public class Foothill
          begin = lastSpacePlus1;
       }
       
-      if (rtnStr.length() - begin >=Foothill.CONSOLE_WIDTH 
+      if (rtnStr.length() - begin >= Foothill.CONSOLE_WIDTH 
             && lastSpacePlus1 != 0)
          rtnStr.setCharAt(lastSpacePlus1 - 1, '\n');
       
@@ -162,6 +184,12 @@ public class Foothill
    }
 } // end class Foothill
 
+/**
+ * Class contains 5 member fields which characterize a person's dating profile.
+ * Class includes methods for mutating, accessing, displaying and determining 
+ * fit.
+ * @author Paul Hayter
+ */
 class DateProfile
 {
    private char gender;
@@ -183,19 +211,27 @@ class DateProfile
    public static final String DEFAULT_NAME = " (no name) ";
    public static final int DEFAULT_ROMANCE = 5;
    public static final int DEFAULT_FINANCE = 5;
-   // other constants
-   public static final double GENDER_MATCH = 1.0;
-   public static final double GENDER_MISMATCH = 0.0;
-   public static final double NO_FIT = 0.0;
+   // other class constants
    public static final char MALE_CHAR = 'M';
    public static final char FEMALE_CHAR = 'F';
    
    // constructors
+   /**
+    * Default constructor.
+    */
    DateProfile()
    {
       setDefaults();
    }
    
+   /**
+    * Parameterized constructor.
+    * @param gdr char to specify gender of profile holder.
+    * @param srchGdr char to specify gender profile holder is seeking.
+    * @param rom int to specify romance level of person being sought.
+    * @param fin int to specify finance level of person being sought.
+    * @param nam name of profile holder.
+    */
    DateProfile(char gdr, char srchGdr, int rom, int fin, String nam)
    {
       setAll(gdr, srchGdr, rom, fin, nam);
@@ -209,6 +245,12 @@ class DateProfile
    String getName() { return name; }
    
    // validators
+   /**
+    * Returns boolean true if gender char is a permitted value or false
+    * otherwise.
+    * @param gdr char representing gender of profile holder.
+    * @return specified boolean.
+    */
    static boolean genderOK(char gdr)
    {
       char upperCaseGdr = Character.toUpperCase(gdr);
@@ -218,6 +260,12 @@ class DateProfile
       return false;
    }
    
+   /**
+    * Returns boolean true if romance value is a permitted value or false
+    * otherwise.
+    * @param romance int representing romance level of person being sought.
+    * @return specified boolean.
+    */
    static boolean romanceOK(int romance)
    {
       if (romance >= DateProfile.MIN_ROMANCE 
@@ -226,6 +274,12 @@ class DateProfile
       return false;
    }
 
+   /**
+    * Returns boolean true if romance value is a permitted value or false
+    * otherwise.
+    * @param finance int representing finance level of person being sought.
+    * @return specified boolean.
+    */
    static boolean financeOK(int finance)
    {
       if (finance >= DateProfile.MIN_FINANCE 
@@ -234,6 +288,11 @@ class DateProfile
       return false;
    }
    
+   /**
+    * Returns boolean true if name is of the correct length or false otherwise.
+    * @param name String containing name of profile holder.
+    * @return specified boolean.
+    */
    static boolean nameOK(String name)
    {
       if (name.length() >= DateProfile.MIN_NAME_LEN 
@@ -243,6 +302,12 @@ class DateProfile
    }
    
    // mutators
+   /**
+    * Returns true if input gender is an acceptable value and member field is 
+    * changed to it; otherwise returns false.
+    * @param gdr char representing gender of profile holder.
+    * @return specified boolean.
+    */
    boolean setGender(char gdr)
    {
       if (!genderOK(gdr))
@@ -251,6 +316,12 @@ class DateProfile
       return true;
    }
    
+   /**
+    * Returns true if input gender is an acceptable value and member field is
+    * changed to it; otherwise returns false.
+    * @param gdr char representing gender profile holder is seeking in a match.
+    * @return specified boolean.
+    */
    boolean setSearchGender(char gdr)
    {
       if (!genderOK(gdr))
@@ -259,6 +330,12 @@ class DateProfile
       return true;
    }
    
+   /**
+    * Returns true if input romance level is in the acceptable range and member
+    * field is changed to it; otherwise returns false.
+    * @param romance int representing romance level being sought.
+    * @return specified boolean.
+    */
    boolean setRomance(int romance)
    {
       if (!romanceOK(romance))
@@ -267,6 +344,12 @@ class DateProfile
       return true;
    }
    
+   /**
+    * Returns true if input finance level is in the acceptable range and member
+    * field is changed to it; otherwise returns false.
+    * @param finance int representing finance level being sought.
+    * @return specified boolean.
+    */
    boolean setFinance(int finance)
    {
       if (!financeOK(finance))
@@ -275,6 +358,12 @@ class DateProfile
       return true;
    }
    
+   /**
+    * Returns true if input name is in the acceptable size and member field is 
+    * changed to it; otherwise returns false.
+    * @param name String contain name of profile holder.
+    * @return specified boolean.
+    */
    boolean setName(String name)
    {
       if (!nameOK(name))
@@ -284,6 +373,15 @@ class DateProfile
    }
    
    // supporting methods
+   /**
+    * Sets all member fields with parameters passed. If parameters are not legal
+    * then default values are used to set member fields.
+    * @param gdr char representing gender of profile holder.
+    * @param srchGdr char representing gender of person being sought.
+    * @param rom int representing romance level of person being sought.
+    * @param fin int representing finance level of person being sought.
+    * @param name String contain name of profile holder.
+    */
    public void setAll(char gdr, char srchGdr, int rom, int fin, String name)
    {
       if (!setGender(gdr))
@@ -298,6 +396,9 @@ class DateProfile
          name = DateProfile.DEFAULT_NAME;
    }
    
+   /**
+    * Sets all member fields to default values.
+    */
    public void setDefaults() 
    {
       gender = DateProfile.DEFAULT_GEND;
@@ -307,38 +408,73 @@ class DateProfile
       name = DateProfile.DEFAULT_NAME;
    }
    
+   /**
+    * Computes fit based on data in this profile and partner profile. A 0.0
+    * is returned if there is no mutual match between the genders being sought
+    * by both profiles. With a mutual match the returned values range [0.1,1].    *  
+    * @param partner DateProfile for fit comparison.
+    * @return double value as specified.
+    */
    public double fitValue(DateProfile partner)
    {
-      if (this.determineGenderFit(partner) == DateProfile.GENDER_MISMATCH)
-         return DateProfile.NO_FIT;
+      if (this.determineGenderFit(partner) == 0.0) // should this be magic???
+         return 0.0;
       return (this.determineRomanceFit(partner) 
             + this.determineFinanceFit(partner))/2;
    }
    
+   /**
+    * Returns 1.0 if there is a mutual match in search genders; otherwise 
+    * returns 0.0.
+    * @param partner DateProfile for search gender confirmation.
+    * @return specified double.
+    */
    private double determineGenderFit(DateProfile partner)
    {
       if (this.gender == partner.searchGender
             && this.searchGender == partner.gender)
-         return DateProfile.GENDER_MATCH;
-      return DateProfile.GENDER_MISMATCH;
+         return 1.0;
+      return 0.0;
    }
    
+   /**
+    * Returns a calculated double value based on romance fit. Value ranges 
+    * from [0.1,1.0].
+    * @param partner DateProfile for romance fit calculation.
+    * @return specified double.
+    */
    private double determineRomanceFit(DateProfile partner)
    {
       return calculateFit(this.romance, partner.romance);
    }
    
+   /**
+    * Returns a calculated double value based on finance fit. Value ranges
+    * from [0.1,1.0].
+    * @param partner DateProfile for finance fit calculation.
+    * @return specified double.
+    */
    private double determineFinanceFit(DateProfile partner)
    {
       return calculateFit(this.finance, partner.finance);
    }
    
+   /**
+    * Helper method for calculating fit. Inputs are expected to be between 1 and
+    * 10, inclusive. Double value returned ranges [0.1,1.0].
+    * @param person1Attr int attribute for fit calculation.
+    * @param person2Attr int attribute for fit calculation.
+    * @return specified double.
+    */
    private static double calculateFit(int person1Attr, int person2Attr)
    {
       return 1.0 - Math.abs(person1Attr - person2Attr) / 10.0;
    }
    
    @Override
+   /**
+    * Returns formatted string containing class fields.
+    */
    public String toString()
    {
       return "Client " + name + ", who is seeking a "
