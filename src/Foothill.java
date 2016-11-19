@@ -154,8 +154,9 @@ public class Foothill
          begin = lastSpacePlus1;
       }
       
-      if (rtnStr.length() - begin >=Foothill.CONSOLE_WIDTH)
-         rtnStr.setCharAt(lastSpacePlus1 - 1, 'n');
+      if (rtnStr.length() - begin >=Foothill.CONSOLE_WIDTH 
+            && lastSpacePlus1 != 0)
+         rtnStr.setCharAt(lastSpacePlus1 - 1, '\n');
       
       return rtnStr.toString();
    }
