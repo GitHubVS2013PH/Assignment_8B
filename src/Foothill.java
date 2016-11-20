@@ -217,6 +217,9 @@ class DateProfile
    public static final double DEFAULT_ROMANCE = 5.0;
    public static final double DEFAULT_FINANCE = 5.0;
    // other class constants
+   public static final double GENDER_MATCH = 1.0;
+   public static final double GENDER_MISMATCH = 0.0;
+   public static final double NO_FIT = 0.0;
    public static final char MALE_CHAR = 'M';
    public static final char FEMALE_CHAR = 'F';
    
@@ -422,16 +425,17 @@ class DateProfile
    /**
     * Computes fit based on data in this profile and partner profile. A 0.0
     * is returned if there is no mutual match between the search genders
-    * by both profiles. With a mutual match the returned value ranges [0.1,1].    *  
+    * by both profiles. With a mutual match the returned double value is the
+    * average of romance fit and finance fit and ranges [0.1,1].
     * @param partner DateProfile for fit comparison with this object.
     * @return double value as specified.
     */
    public double fitValue(DateProfile partner)
    {
-      if (this.determineGenderFit(partner) == 0.0) // SHOULD THIS BE MAGIC???
-         return 0.0;
+      if (this.determineGenderFit(partner) == DateProfile.GENDER_MISMATCH)
+         return DateProfile.NO_FIT;
       return (this.determineRomanceFit(partner) 
-            + this.determineFinanceFit(partner))/2;
+            + this.determineFinanceFit(partner)) / 2.0;
    }
    
    /**
@@ -444,8 +448,8 @@ class DateProfile
    {
       if (this.gender == partner.searchGender
             && this.searchGender == partner.gender)
-         return 1.0;
-      return 0.0;
+         return DateProfile.GENDER_MATCH;
+      return DateProfile.GENDER_MISMATCH;
    }
    
    /**
@@ -479,7 +483,8 @@ class DateProfile
     */
    private static double calculateFit(double person1Attr, double person2Attr)
    {
-      return 1.0 - Math.abs(person1Attr - person2Attr) / 10.0;
+      final double NORMALIZE_FACTOR = 10.0;
+      return 1.0 - (Math.abs(person1Attr - person2Attr) / NORMALIZE_FACTOR);
    }
     
    @Override
