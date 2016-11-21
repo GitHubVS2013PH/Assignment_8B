@@ -512,4 +512,120 @@ class DateProfile
 } // end class DateProfile
 
 /********************************* RUN *****************************************
+Display all fit combinations
+The Foothill Dating App has determined that: Client Bridget Bardot, who is
+seeking a gentleman with a romance level of 9.10 and a finance level of 6.00,
+and Client Bridget Bardot, who is seeking a gentleman with a romance level of
+9.10 and a finance level of 6.00, have a compatibility fit of 0.00.
+
+The Foothill Dating App has determined that: Client Bridget Bardot, who is
+seeking a gentleman with a romance level of 9.10 and a finance level of 6.00,
+and Client Clint Eastwood, who is seeking a lady with a romance level of 4.00
+and a finance level of 8.30, have a compatibility fit of 0.63.
+
+The Foothill Dating App has determined that: Client Bridget Bardot, who is
+seeking a gentleman with a romance level of 9.10 and a finance level of 6.00,
+and Client Lady Gaga, who is seeking a gentleman with a romance level of 9.90
+and a finance level of 9.80, have a compatibility fit of 0.00.
+
+The Foothill Dating App has determined that: Client Bridget Bardot, who is
+seeking a gentleman with a romance level of 9.10 and a finance level of 6.00,
+and Client Vladimir Putin, who is seeking a lady with a romance level of 1.10
+and a finance level of 4.00, have a compatibility fit of 0.50.
+
+The Foothill Dating App has determined that: Client Clint Eastwood, who is
+seeking a lady with a romance level of 4.00 and a finance level of 8.30, and
+Client Bridget Bardot, who is seeking a gentleman with a romance level of 9.10
+and a finance level of 6.00, have a compatibility fit of 0.63.
+
+The Foothill Dating App has determined that: Client Clint Eastwood, who is
+seeking a lady with a romance level of 4.00 and a finance level of 8.30, and
+Client Clint Eastwood, who is seeking a lady with a romance level of 4.00 and a
+finance level of 8.30, have a compatibility fit of 0.00.
+
+The Foothill Dating App has determined that: Client Clint Eastwood, who is
+seeking a lady with a romance level of 4.00 and a finance level of 8.30, and
+Client Lady Gaga, who is seeking a gentleman with a romance level of 9.90 and a
+finance level of 9.80, have a compatibility fit of 0.63.
+
+The Foothill Dating App has determined that: Client Clint Eastwood, who is
+seeking a lady with a romance level of 4.00 and a finance level of 8.30, and
+Client Vladimir Putin, who is seeking a lady with a romance level of 1.10 and a
+finance level of 4.00, have a compatibility fit of 0.00.
+
+The Foothill Dating App has determined that: Client Lady Gaga, who is seeking a
+gentleman with a romance level of 9.90 and a finance level of 9.80, and Client
+Bridget Bardot, who is seeking a gentleman with a romance level of 9.10 and a
+finance level of 6.00, have a compatibility fit of 0.00.
+
+The Foothill Dating App has determined that: Client Lady Gaga, who is seeking a
+gentleman with a romance level of 9.90 and a finance level of 9.80, and Client
+Clint Eastwood, who is seeking a lady with a romance level of 4.00 and a
+finance level of 8.30, have a compatibility fit of 0.63.
+
+The Foothill Dating App has determined that: Client Lady Gaga, who is seeking a
+gentleman with a romance level of 9.90 and a finance level of 9.80, and Client
+Lady Gaga, who is seeking a gentleman with a romance level of 9.90 and a
+finance level of 9.80, have a compatibility fit of 0.00.
+
+The Foothill Dating App has determined that: Client Lady Gaga, who is seeking a
+gentleman with a romance level of 9.90 and a finance level of 9.80, and Client
+Vladimir Putin, who is seeking a lady with a romance level of 1.10 and a
+finance level of 4.00, have a compatibility fit of 0.27.
+
+The Foothill Dating App has determined that: Client Vladimir Putin, who is
+seeking a lady with a romance level of 1.10 and a finance level of 4.00, and
+Client Bridget Bardot, who is seeking a gentleman with a romance level of 9.10
+and a finance level of 6.00, have a compatibility fit of 0.50.
+
+The Foothill Dating App has determined that: Client Vladimir Putin, who is
+seeking a lady with a romance level of 1.10 and a finance level of 4.00, and
+Client Clint Eastwood, who is seeking a lady with a romance level of 4.00 and a
+finance level of 8.30, have a compatibility fit of 0.00.
+
+The Foothill Dating App has determined that: Client Vladimir Putin, who is
+seeking a lady with a romance level of 1.10 and a finance level of 4.00, and
+Client Lady Gaga, who is seeking a gentleman with a romance level of 9.90 and a
+finance level of 9.80, have a compatibility fit of 0.27.
+
+The Foothill Dating App has determined that: Client Vladimir Putin, who is
+seeking a lady with a romance level of 1.10 and a finance level of 4.00, and
+Client Vladimir Putin, who is seeking a lady with a romance level of 1.10 and a
+finance level of 4.00, have a compatibility fit of 0.00.
+
+Test accessors while testing constructors
+Test default constructor; expect all default values
+Default constructor also tests setDefaults()
+Default gender is: M with expected value being M
+Default search gender is: F with expected value being F
+Default romance is: 5.0 with expected value being 5.0
+Default finance is: 5.0 with expected value being 5.0
+Default name is:  (no name)  with expected value being  (no name) 
+
+Test parameterized constructor; expect values of:
+Gender='F', Search Gender='M', Romance=9.1, Finance=6.0, name: Bridget Bardot
+Parameterized constructor also tests setAll()
+applicant1 gender is: F
+applicant1 search gender is: M
+applicant1 romance is: 9.1
+applicant1 finance is: 6.0
+applicant1 name is: Bridget Bardot
+
+Testing mutators and validators
+Correctly rejected a bad finance value
+Correctly accepted a good finance value
+Correctly rejected a bad romance value
+Correctly accepted a good romance value
+Correctly rejected a bad gender value
+Correctly accepted a good gender value
+Correctly rejected a bad search gender value
+Correctly accepted a good search gender value
+Correctly rejected a bad name
+Correctly accepted a good name
+
+Test fitValue()
+applicant2 gender is: M applicant4 search gender is: F
+Correctly identified a bad fit based on gender
+applicant2 gender is: M applicant3 search gender is: M
+Correctly identified a good fit based on gender
 *******************************************************************************/
