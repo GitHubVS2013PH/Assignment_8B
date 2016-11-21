@@ -23,7 +23,7 @@ public class Foothill
       DateProfile applicant4 = new DateProfile('M','F',1.1,4,"Vladimir Putin");
       
       // Display all 16 combinations of fits
-      System.out.println("Display all fits");
+      System.out.println("Display all fit combinations");
       displayTwoProfiles(applicant1, applicant1);
       displayTwoProfiles(applicant1, applicant2);
       displayTwoProfiles(applicant1, applicant3);
@@ -46,6 +46,7 @@ public class Foothill
       
       // Test constructors and accessors
       System.out.println("Test accessors while testing constructors");
+      
       System.out.println("Test default constructor; expect all default values");
       System.out.println("Default constructor also tests setDefaults()");
       DateProfile defaultApp = new DateProfile();
@@ -79,17 +80,17 @@ public class Foothill
       else
          System.out.println("Correctly rejected a bad finance value");
       
-      if (defaultApp.setFinance(6))
+      if (defaultApp.setFinance(6.2))
          System.out.println("Correctly accepted a good finance value");
       else
          System.out.println("INCORRECTLY rejected a good finance value");
 
-      if (defaultApp.setRomance(11))
+      if (defaultApp.setRomance(10.9))
          System.out.println("INCORRECTLY accepted a bad romance value");
       else
          System.out.println("Correctly rejected a bad romance value");
       
-      if (defaultApp.setRomance(6))
+      if (defaultApp.setRomance(5.3))
          System.out.println("Correctly accepted a good romance value");
       else
          System.out.println("INCORRECTLY rejected a good romance value");
@@ -161,6 +162,7 @@ public class Foothill
    /**
     * Returns a copy of inputStr formatted to fit the console width specified 
     * by CONSOLE_WIDTH. Line breaks are between words. There is no hyphenation.
+    * Returns empty String if inputStr is null.
     * @param inputStr String input to be formatted.
     * @return specified String.
     */
@@ -168,6 +170,10 @@ public class Foothill
    {
       final int NOT_FOUND = -1;
       int begin = 0, lastSpacePlus1 = 0, nextSpace = 0;
+      
+      if (inputStr == null)
+         return "";
+      
       StringBuilder rtnStr = new StringBuilder(inputStr);
       
       while ((nextSpace = rtnStr.indexOf(" ",lastSpacePlus1)) != NOT_FOUND)
@@ -222,6 +228,8 @@ class DateProfile
    public static final double NO_FIT = 0.0;
    public static final char MALE_CHAR = 'M';
    public static final char FEMALE_CHAR = 'F';
+   public static final String MALE_NOUN = "gentleman";
+   public static final String FEMALE_NOUN = "lady";
    
    // constructors
    /**
@@ -255,7 +263,8 @@ class DateProfile
    // validators
    /**
     * Returns boolean true if gender char is a permitted value as specified by
-    * MALE_CHAR and FEMALE_CHAR, or false otherwise.
+    * upper or lower case version of MALE_CHAR or FEMALE_CHAR, or false 
+    * otherwise.
     * @param gdr char representing gender of profile holder.
     * @return specified boolean.
     */
@@ -388,7 +397,7 @@ class DateProfile
     * values are: DEFAULT_GEND, DEFAULT_SEARCH_GEND, DEFAULT_ROMANCE, 
     * DEFAULT_FINANCE and DEFAULT_NAME.
     * @param gdr char representing gender of profile holder.
-    * @param srchGdr char representing gender of person being sought.
+    * @param srchGdr char representing search gender.
     * @param rom double representing romance level of person being sought.
     * @param fin double representing finance level of person being sought.
     * @param name String contain name of profile holder.
@@ -423,38 +432,39 @@ class DateProfile
    }
    
    /**
-    * Computes fit based on data in this profile and partner profile. A 0.0
+    * Computes fit based on data in this profile and partner profile. A NO_FIT
     * is returned if there is no mutual match between the search genders
     * by both profiles. With a mutual match the returned double value is the
-    * average of romance fit and finance fit and ranges [0.1,1].
+    * average of romance fit and finance fit and ranges from 0.1 to 1.0, 
+    * inclusive.
     * @param partner DateProfile for fit comparison with this object.
     * @return double value as specified.
     */
    public double fitValue(DateProfile partner)
    {
-      if (this.determineGenderFit(partner) == DateProfile.GENDER_MISMATCH)
+      if (determineGenderFit(partner) == DateProfile.GENDER_MISMATCH)
          return DateProfile.NO_FIT;
-      return (this.determineRomanceFit(partner) 
-            + this.determineFinanceFit(partner)) / 2.0;
+      double average_fit = (determineRomanceFit(partner) 
+         + determineFinanceFit(partner)) / 2.0; 
+      return average_fit;
    }
    
    /**
-    * Returns 1.0 if there is a mutual match in search genders; otherwise 
-    * returns 0.0.
+    * Returns GENDER_MATCH if there is a mutual match in search genders; 
+    * otherwise returns GENDER_MISMATCH.
     * @param partner DateProfile for search gender confirmation.
     * @return specified double.
     */
    private double determineGenderFit(DateProfile partner)
    {
-      if (this.gender == partner.searchGender
-            && this.searchGender == partner.gender)
+      if (gender == partner.searchGender && searchGender == partner.gender)
          return DateProfile.GENDER_MATCH;
       return DateProfile.GENDER_MISMATCH;
    }
    
    /**
     * Returns a calculated double value based on romance fit. Value ranges 
-    * from [0.1,1.0].
+    * from 0.1 to 1.0, inclusive.
     * @param partner DateProfile for romance fit calculation.
     * @return specified double.
     */
@@ -465,7 +475,7 @@ class DateProfile
    
    /**
     * Returns a calculated double value based on finance fit. Value ranges
-    * from [0.1,1.0].
+    * from 0.1 to 1.0, inclusive.
     * @param partner DateProfile for finance fit calculation.
     * @return specified double.
     */
@@ -476,7 +486,7 @@ class DateProfile
    
    /**
     * Helper method for calculating fit. Inputs are expected to be between 1 and
-    * 10, inclusive. Double value returned ranges [0.1,1.0].
+    * 10, inclusive. Double value returned ranges 0.1 to 1.0, inclusive.
     * @param person1Attr double attribute for fit calculation with person2Attr.
     * @param person2Attr double attribute for fit calculation with person1Attr.
     * @return specified double.
@@ -493,10 +503,11 @@ class DateProfile
     */
    public String toString()
    {
-      return "Client " + name + ", who is seeking a "
-            + (searchGender == 'M' ? "Man" : "Woman") 
-            + " with a romance level of " + romance
-            + " and a finance level of " + finance;
+      String searchGdrStr = (searchGender == 'M' ? DateProfile.MALE_NOUN :
+         DateProfile.FEMALE_NOUN);
+      return String.format("Client %s, who is seeking a %s with a romance level"
+            + " of %.2f and a finance level of %.2f",
+            name, searchGdrStr, romance, finance);
    }
 } // end class DateProfile
 
